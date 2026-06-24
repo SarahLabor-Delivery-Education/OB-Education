@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IBW & Fluid Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      padding: 20px;
+    }
+    input, button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Ideal Body Weight Calculator (Women)</h2>
+
+  <label>Height (inches):</label><br>
+  <input type="number" id="height" placeholder="e.g. 65"><br>
+
+  <button onclick="calculate()">Calculate</button>
+
+  <div class="result" id="results"></div>
+
+  <script>
+    function calculate() {
+      let height = parseFloat(document.getElementById("height").value);
+
+      if (!height || height < 60) {
+        document.getElementById("results").innerHTML = "Enter a valid height ≥ 60 inches.";
+        return;
+      }
+
+      // Devine formula (women)
+      let ibw = 45.5 + 2.3 * (height - 60);
+
+      // Fluid bolus = 30 mL/kg
+      let bolus = ibw * 30;
+
+      document.getElementById("results").innerHTML =
+        "Ideal Body Weight: " + ibw.toFixed(1) + " kg<br>" +
+        "Fluid Bolus: " + bolus.toFixed(0) + " mL";
+    }
+  </script>
+
+</body>
+</html>
