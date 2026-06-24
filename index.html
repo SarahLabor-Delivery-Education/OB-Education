@@ -1,55 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>IBW & Fluid Calculator</title>
+  <meta charset="UTF-8">
+  <title>Ideal Body Weight & Fluid Bolus Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
-      font-family: Arial;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      max-width: 420px;
+      margin: auto;
       padding: 20px;
+      text-align: center;
     }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
     input, button {
+      width: 100%;
       font-size: 18px;
       padding: 10px;
-      margin: 10px;
+      margin-top: 10px;
     }
+
+    button {
+      margin-top: 15px;
+    }
+
     .result {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 20px;
       font-weight: bold;
     }
+
+    .disclaimer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #555;
+    }
+
+    .formula {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #555;
+    }
   </style>
 </head>
+
 <body>
 
   <h2>Ideal Body Weight Calculator (Women)</h2>
 
-  <label>Height (inches):</label><br>
-  <input type="number" id="height" placeholder="e.g. 65"><br>
+  <p>
+    Enter the patient's height in inches to calculate their ideal body weight
+    according to the Devine Formula* and the recommended fluid bolus volume.
+  </p>
+
+  <label for="height">Height (inches):</label>
+  <input type="number" id="height" placeholder="Example: 64">
 
   <button onclick="calculate()">Calculate</button>
 
   <div class="result" id="results"></div>
 
+  <div class="disclaimer">
+    For reference only. Verify per institutional protocol.
+  </div>
+
+  <div class="formula">
+    *Devine Formula: 45.5 + 2.3 × (Patient height in inches − 60)
+  </div>
+
   <script>
     function calculate() {
-      let height = parseFloat(document.getElementById("height").value);
+      const height = parseFloat(document.getElementById("height").value);
 
       if (!height || height < 60) {
-        document.getElementById("results").innerHTML = "Enter a valid height ≥ 60 inches.";
+        document.getElementById("results").innerHTML =
+          "Please enter a valid height (≥ 60 inches).";
         return;
       }
 
       // Devine formula (women)
-      let ibw = 45.5 + 2.3 * (height - 60);
+      const ibw = 45.5 + 2.3 * (height - 60);
 
-      // Fluid bolus = 30 mL/kg
-      let bolus = ibw * 30;
+      // Fluid bolus: 30 mL/kg IBW
+      const bolus = ibw * 30;
 
       document.getElementById("results").innerHTML =
         "Ideal Body Weight: " + ibw.toFixed(1) + " kg<br>" +
-        "Fluid Bolus: " + bolus.toFixed(0) + " mL";
+        "Fluid Bolus (30 mL/kg IBW): " + bolus.toFixed(0) + " mL";
     }
   </script>
 
